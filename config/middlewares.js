@@ -11,14 +11,17 @@ module.exports = {
 // implementation details
 function authenticate(req, res, next) {
   const token = req.get("Authorization");
+  console.log(token);
 
   if (token) {
     jwt.verify(token, jwtKey, (err, decoded) => {
-      if (err) return res.status(401).json(err);
+      if (err) {
+        return res.status(401).json(err);
+      } else {
+        req.decoded = decoded;
 
-      req.decoded = decoded;
-
-      next();
+        next();
+      }
     });
   } else {
     return res.status(401).json({

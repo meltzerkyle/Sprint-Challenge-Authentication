@@ -1,5 +1,7 @@
 const axios = require("axios");
 const bcrypt = require("bcryptjs");
+const db = require("../database/dbConfig.js");
+
 
 const { authenticate, generateToken } = require("./middlewares");
 
@@ -11,6 +13,7 @@ module.exports = server => {
 
 function register(req, res) {
   const creds = req.body;
+  console.log(req.body)
   const hash = bcrypt.hashSync(creds.password, 10);
   creds.password = hash;
 
